@@ -1,0 +1,40 @@
+<%- include('./partials/header') %>
+  <% // the include tag will be replaced by all the ejs code in the given file %>
+  <h1>Survey</h1>
+  <form method="POST">
+    <div>
+      <label for="fullName">What's your name?</label>
+      <br>
+      <input type="text" id="fullName" name="fullName">
+    </div>
+    <div>
+      <label for="favouriteColor">What's your favourite color?</label>
+      <br>
+      <input type="color" id="favouriteColor" name="favouriteColor">
+    </div>
+    <div>
+      <label for="favouriteDay">What's your favourite day?</label>
+      <br>
+      <% const days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ] %>
+      <% for (let option of days) { %>
+        <label for="<%= option %>"><%= option %></label>
+        <input 
+          type="radio" 
+          name="favouriteDay" 
+          id="<%= option %>"
+          value="<%= option %>"
+        >
+        <br>
+      <% } %>
+    </div>
+    <input type="submit" value="send">
+  </form>
+<%- include('./partials/footer') %>

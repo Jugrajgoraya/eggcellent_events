@@ -1,0 +1,10 @@
+<%- include('./partials/header') %>
+<h1><%= title %></h1>
+<ul>
+  <% for (meme of memes) { %>
+    <li>
+      <img src='<%= meme %>'/>
+    </li>
+  <% } %>
+</ul>
+<%- include('./partials/footer') %>

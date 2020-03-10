@@ -1,0 +1,11 @@
+<%- include('../partials/header') %>
+  <h1>Events Index</h1>
+  <ul>
+    <% for (let event of events) { %>
+      <li>
+        <h3><span>[<%= event.id %></span>] <%= event.title %></h3>
+        <p><%= event.description %></p>
+      </li>
+    <% } %>
+  </ul>
+<%- include('../partials/footer') %>
