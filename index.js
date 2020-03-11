@@ -13,6 +13,7 @@ app.set('views', 'views') // tell express our view files are in a directory call
 // Morgan Middleware - used for logging requests
 // the location of where you invoke/mount the middleware matters. If you need certain middleware to run before something then make sure it is invoked before
 app.use(logger('dev'))
+app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true })) // middleware for parsing HTTP POST request's body. It will put all the data from a POST request into a property `req.body`
 
 // Routes
