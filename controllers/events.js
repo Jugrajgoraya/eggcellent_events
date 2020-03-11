@@ -1,28 +1,23 @@
 const knex = require('../db/client')
-const { events } = require('../models')
+const { event } = require('../models') // deconstructing event property from models object
+// const models = require('../models') these two lines are replaced by the one above
+// const event = models.event
 
 module.exports = {
   index: (req, res) => {
-      events.all()
+    event.all() // ask the model for all of our vents
       .then(events => {
-          res.render('events/index', {events})
+        res.render('events/index', { events }) // when we get all the events respond with a view
       })
-    // knex.select('*').from('events')
-    //   .then(events => {
-    //     res.render('events/index', { events })
-    //   })
   },
   create: (req, res) => {
     const { title, description } = req.body
-    knex.insert({ title, description }).into('events')
-      .then(() => {
-        res.redirect('/events')
-      })
-      .catch(() => {
-        res.render('events/new')
+    event.create({ title, description })
+      .then(event => {
+        res.send(event)
       })
   },
   new: (req, res) => {
     res.render('events/new')
-}
+  }
 }

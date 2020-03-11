@@ -53,6 +53,20 @@ app.get('/memes', (req, res) => {
 
 const PORT = 3000
 const DOMAIN = 'localhost'
+
 app.listen(PORT, DOMAIN, () => {
   console.log(`Server Listening on ${DOMAIN}:${PORT}`)
 })
+
+// Morning Folks, Wednesday March 11. We'll start lecture at 9:30am
+
+// Todays agenda:
+// Refactoring Business Logic into Controllers
+// Refactoring Business Logic into Models
+// Static Middleware
+// Custom Middleware
+
+// Controller
+// - responsible for handling a request
+// - get resources. Example,  it will ask the Model to query some data from the database
+// - make responses. For example, it will render a View.
