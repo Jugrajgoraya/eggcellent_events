@@ -4,6 +4,7 @@ const { events } = require('../controllers')
 const router = express.Router()
 
 router.get('/', events.index)
+router.get('/:id', events.show)
 
 router.post('/', events.create)
 

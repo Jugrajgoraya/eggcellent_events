@@ -1,6 +1,7 @@
 const express = require('express')
 const logger = require('morgan')
 const eventsRouter = require('./routes/events')
+const noMonkey = require('./middleware/noMonkey')
 
 const app = express()
 
@@ -15,7 +16,7 @@ app.set('views', 'views') // tell express our view files are in a directory call
 app.use(logger('dev'))
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true })) // middleware for parsing HTTP POST request's body. It will put all the data from a POST request into a property `req.body`
-
+app.use(noMonkey)
 // Routes
 
 // Event Router

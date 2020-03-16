@@ -7,6 +7,9 @@ module.exports = {
         return events
       })
   },
+  one: (id)=> {
+   return knex.select().from('events').where( {id : id}) 
+  },
   create: ({ title, description }) => {
     return knex.insert({ title, description })
       .into('events')
