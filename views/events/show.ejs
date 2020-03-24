@@ -1,7 +1,12 @@
 <%- include('../partials/header') %>
-  <h1 >Event Show Page</h1>
+  <h1>Event Show Page</h1>
   <h3><%= event.id %>: <%= event.title %></h3>
   <p><%= event.description %></p>
   <hr>
   <p><%= event.created_at %></p> | <p><%= event.updated_at %></p>
+  <form action="/events/<%= event.id %>" method="POST">
+    <!-- We need this hidden input for methodOverride middleware to change this POST request to a DELETE request -->
+    <input type="hidden" name="_method" value="DELETE">
+    <input class="btn btn-danger" type="submit" value="Delete">
+  </form>
 <%- include('../partials/footer') %>

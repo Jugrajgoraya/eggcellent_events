@@ -1,14 +1,6 @@
 <%- include('../partials/header') %>
   <h1>New Event page</h1>
   <form action="/events" method="POST">
-    <div>
-      <label for="title">Title</label>
-      <input type="text" name="title">
-    </div>
-    <div>
-      <label for="description">Description</label>
-      <textarea type="text" name="description"></textarea>
-    </div>
-    <input type="submit">
+    <%- include('_eventFormInputs') %>
   </form>
 <%- include('../partials/footer') %>

@@ -1,5 +1,6 @@
 const express = require('express')
 const logger = require('morgan')
+const methodOverride = require('method-override')
 const eventsRouter = require('./routes/events')
 const noMonkey = require('./middleware/noMonkey')
 
@@ -14,8 +15,18 @@ app.set('views', 'views') // tell express our view files are in a directory call
 // Morgan Middleware - used for logging requests
 // the location of where you invoke/mount the middleware matters. If you need certain middleware to run before something then make sure it is invoked before
 app.use(logger('dev'))
-app.use(express.static('public'))
+app.use(express.static('public')) // install express static middleware https://expressjs.com/en/4x/api.html#express.static
 app.use(express.urlencoded({ extended: true })) // middleware for parsing HTTP POST request's body. It will put all the data from a POST request into a property `req.body`
+
+// This methodOverride middleware is a HACK to make HTML forms support DELETE/PUT/PATCH/ect methods
+app.use(methodOverride((req, res) => {
+  if (req.body && req.body._method) {
+    const method = req.body._method
+    // this function should return a string of "DELETE"/"PUT"/"PATCH"/ect
+    // it will replace the POST method being made.
+    return method
+  }
+}))
 app.use(noMonkey)
 // Routes
 
