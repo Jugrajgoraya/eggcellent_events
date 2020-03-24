@@ -40,15 +40,11 @@ module.exports = {
   },
   delete: (req, res) => {
     const { id } = req.params // req.params.id is the value coming from the URL
-    event.delete(id)
+    new event({ id }).destroy() // delete the event record with id
       .then(hasDeleted => {
-        if (hasDeleted) {
-          res.redirect('/events')
-        } else {
-          res.redirect(`/events/${id}`)
-        }
+        res.redirect('/events')
       })
-      .catch(err => {
+      .catch(err => { //throws https://bookshelfjs.org/api.html#Model-static-NoRowsDeletedError error if no records are deleted
         console.log(err)
       })
   },
