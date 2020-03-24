@@ -1,11 +1,14 @@
-const { event } = require('../models') // deconstructing event property from models object
+const { event } = require('../models/events') // deconstructing event property from models object
 // const models = require('../models') these two lines are replaced by the one above
 // const event = models.event
 
 module.exports = {
   index: (req, res) => {
-    event.all() // ask the model for all of our vents
+    event.fetchAll()
       .then(events => {
+        // Bookshelf ORM returns a Bookshelf Model instance that has a bunch of extra methods.
+        // we have to call events.toJSON() to grab the records from the Bookshelf Model Instance
+        events = events.toJSON()
         res.render('events/index', { events }) // when we get all the events respond with a view
       })
   },
@@ -21,7 +24,7 @@ module.exports = {
     const { title, description } = req.body
     event.create({ title, description })
       .then(event => {
-        res.send(event)
+        res.redirect(`/events/${event.id}`)
       })
   },
   new: (req, res) => {
@@ -52,11 +55,11 @@ module.exports = {
     const { id } = req.params
     const { title, description } = req.body
     event.update({ id, title, description })
-      .then(events => {
-        if (events.length > 0) {
-          res.redirect(`/events/${events[0].id}`)
+      .then(event => {
+        if (event) {
+          res.redirect(`/events/${event.id}`)
         } else {
-          res.send(`Update to event with id ${id} failed`)
+          res.redirect(`/events/${id}/edit`)
         }
       })
   }
