@@ -50,21 +50,22 @@ module.exports = {
   },
   edit: (req, res) => {
     const { id } = req.params
-    event.one(id)
+    new event({ id }).fetch()
       .then(event => {
+        event = event.toJSON()
         res.render('events/edit', { event })
       })
   },
   update: (req, res) => {
     const { id } = req.params
     const { title, description } = req.body
-    event.update({ id, title, description })
+    new event({ id }).save({ title, description })
       .then(event => {
-        if (event) {
-          res.redirect(`/events/${event.id}`)
-        } else {
-          res.redirect(`/events/${id}/edit`)
-        }
+        event = event.toJSON()
+        res.redirect(`/events/${event.id}`)
+      })
+      .catch(err => { // throws https://bookshelfjs.org/api.html#Model-static-NoRowsUpdatedError if no records were updated
+        console.log(err)
       })
   }
 }
