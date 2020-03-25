@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "bookshelf": "^1.1.0",
+    "cowsay": "^1.4.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "knex": "^0.20.11",
