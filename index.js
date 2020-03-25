@@ -1,5 +1,6 @@
 const express = require('express')
 const logger = require('morgan')
+const cookieSession = require('cookie-session')
 const methodOverride = require('method-override')
 const eventsRouter = require('./routes/events')
 const usersRouter = require('./routes/users')
@@ -20,6 +21,12 @@ app.use(logger('dev'))
 app.use(express.static('public')) // install express static middleware https://expressjs.com/en/4x/api.html#express.static
 app.use(express.urlencoded({ extended: true })) // middleware for parsing HTTP POST request's body. It will put all the data from a POST request into a property `req.body`
 
+app.use(cookieSession({
+  name: 'session', // this is the key of the cookie
+  secret: 'supersecret', // used to sign our cookie
+  maxAge: 24 * 60 * 60 * 1000 // to expire the cookie after one day
+}))
+
 // This methodOverride middleware is a HACK to make HTML forms support DELETE/PUT/PATCH/ect methods
 app.use(methodOverride((req, res) => {
   if (req.body && req.body._method) {
@@ -36,7 +43,7 @@ app.use(noMonkey)
 // If someone goes to /events... use eventsRouter
 app.use('/events', eventsRouter)
 app.use('/users', usersRouter)
-app.use('/roots', rootsRouter)
+app.use('/', rootsRouter)
 
 // GET "/"
 app.get('/', (req, res) => {
