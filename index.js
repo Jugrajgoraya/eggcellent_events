@@ -2,6 +2,7 @@ const express = require('express')
 const logger = require('morgan')
 const methodOverride = require('method-override')
 const eventsRouter = require('./routes/events')
+const usersRouter = require('./routes/users')
 const noMonkey = require('./middleware/noMonkey')
 
 const app = express()
@@ -33,6 +34,7 @@ app.use(noMonkey)
 // Event Router
 // If someone goes to /events... use eventsRouter
 app.use('/events', eventsRouter)
+app.use('/users', usersRouter)
 
 // GET "/"
 app.get('/', (req, res) => {
