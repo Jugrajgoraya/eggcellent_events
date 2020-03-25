@@ -1,7 +1,7 @@
 const Event = require('./events')
-const user = require('./users')
+const User = require('./users')
 
 module.exports = {
   Event,
-  user
+  User
 }
