@@ -1,0 +1,13 @@
+<%- include('../partials/header') %>
+  <h1>User Show Page</h1>
+  <h3><%= user.id %>: <%= user.first_name %> <%= user.last_name%></h3>
+  <p>Email: <%= user.email %></p>
+  <hr>
+  <p><%= user.created_at %></p> | <p><%= user.updated_at %></p>
+  <form action="/users/<%= user.id %>" method="POST" style="display: inline;">
+    <!-- We need this hidden input for methodOverride middleware to change this POST request to a DELETE request -->
+    <input type="hidden" name="_method" value="DELETE">
+    <input class="btn btn-danger" type="submit" value="Delete">
+  </form>
+  <a href="/users/<%= user.id %>/edit" class="btn btn-info">Edit</a>
+<%- include('../partials/footer') %>

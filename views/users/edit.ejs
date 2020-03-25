@@ -1,0 +1,7 @@
+<%- include('../partials/header') %>
+<h1>Edit User Page</h1>
+<form action="/users/<%= user.id %>" method="POST">
+  <input type="hidden" name="_method" value="PATCH">
+  <%- include('_userFormInputs') %>
+</form>
+<%- include('../partials/footer') %>

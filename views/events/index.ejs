@@ -1,15 +1,17 @@
 <%- include('../partials/header') %>
   <h1>Events Index</h1>
-  <ul>
+  <div class="row row-cols-1 row-cols-md-3">
     <% for (let event of events) { %>
-      <div class="card" style="width: 18rem;">
-        <img src="#" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title"><%= event.title %></h5>
-          <p class="card-text"><%= event.description %></p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+      <div class="col mb-2">
+        <div class="card h-100" style="width: 18rem;">
+          <img src="#" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"><%= event.title %></h5>
+            <p class="card-text"><%= event.description %></p>
+            <a href="events/<%= event.id %>" class="btn btn-primary stretched-link">Go somewhere</a>
+          </div>
         </div>
       </div>
     <% } %>
-  </ul>
+  </div>
 <%- include('../partials/footer') %>
