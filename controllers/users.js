@@ -1,4 +1,5 @@
 const { User } = require('../models')
+const Password = require('../helpers/password')
 
 module.exports = {
   index: (req, res) => {
@@ -13,11 +14,18 @@ module.exports = {
     res.render('users/new')
   },
   create: (req, res) => {
-    const { firstName, lastName, email, password } = req.body
-    new User({ first_name: firstName, last_name: lastName, email, password_digest: password }).save()
-      .then(user => {
-        res.send(user)
-      })
+    const { firstName, lastName, email, password, passwordConfirmation } = req.body
+    if (password === passwordConfirmation) {
+      Password.create(password)
+        .then(hash => {
+          return new User({ first_name: firstName, last_name: lastName, email, password_digest: hash }).save()
+        })
+        .then(user => {
+          res.send(user)
+        })
+    } else {
+      res.send('passwords do not match')
+    }
   },
   show: (req, res) => {
     const { id } = req.params
