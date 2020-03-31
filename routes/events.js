@@ -1,26 +1,34 @@
 const express = require('express')
 const { events } = require('../controllers')
+const authenticateUser = require('../middleware/authenticateUser')
 
 const router = express.Router()
 
+// router.use(authenticateUser) will mount this middleware before all of the routes below
+
+// events index page
 router.get('/', events.index)
 
-router.get('/new', events.new)
+//  GET "/events/new"
+router.get('/new', authenticateUser, events.new)
 
 // events show page
+// "/events/:id"
+// "/events/2"
 router.get('/:id', events.show)
 
 // events edit page
 // GET "/events/:id/edit"
-router.get('/:id/edit', events.edit)
+router.get('/:id/edit', authenticateUser, events.edit)
 
 // events patch action
 // PATCH "/events/:id"
-router.patch('/:id', events.update)
+router.patch('/:id', authenticateUser, events.update)
 
 // events create action
-router.post('/', events.create)
+router.post('/', authenticateUser, events.create)
 
 // events delete action
-router.delete('/:id', events.delete)
+router.delete('/:id', authenticateUser, events.delete)
+
 module.exports = router
