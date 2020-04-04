@@ -1,5 +1,4 @@
-const { User } = require('../models')
-const Password = require('../helpers/Password')
+const { User } = require('../models') // User is our Bookshelf Model
 
 module.exports = {
   index: (req, res) => {
@@ -15,20 +14,30 @@ module.exports = {
   },
   create: (req, res, next) => {
     const { firstName, lastName, email, password, passwordConfirmation } = req.body
-    if (password === passwordConfirmation) {
-      Password.create(password)
-        .then(hash => {
-          return new User({ first_name: firstName, last_name: lastName, email, password_digest: hash }).save()
-        })
-        .then(user => {
-          res.send(user)
-        })
-        .catch(err => {
-          next(err)
-        })
-    } else {
-      res.send('passwords do not match')
-    }
+    // we create a new instance of a User model
+    new User({
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      password: password,
+      passwordConfirmation: passwordConfirmation
+    }) // calling .save() will trigger the "saving" event.
+    // all bookshelf methods will have documentation about which events it will trigger
+    // https://bookshelfjs.org/api.html#Model-instance-save
+      .save()
+      .then(user => {
+        user = user.toJSON()
+        res.redirect(`/users/${user.id}`)
+      })
+      .catch(err => { // err is something we have thrown from our model or something bookshelf has thrown
+        let errors
+        if (err.length) {
+          errors = err.map(e => e.message)
+        } else {
+          errors = [err.message]
+        }
+        res.render('users/new', { errors })
+      })
   },
   show: (req, res) => {
     const { id } = req.params
